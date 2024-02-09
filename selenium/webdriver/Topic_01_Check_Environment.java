@@ -33,7 +33,7 @@ public class Topic_01_Check_Environment {
     public void TC_01_Url() {
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.facebook.com/");
     }
-
+//update 1
     @Test
     public void TC_02_Logo() {
         Assert.assertTrue(driver.findElement(By.cssSelector("img.fb_logo")).isDisplayed());
