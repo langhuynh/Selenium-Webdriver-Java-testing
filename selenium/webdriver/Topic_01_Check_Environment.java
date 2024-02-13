@@ -33,12 +33,12 @@ public class Topic_01_Check_Environment {
     public void TC_01_Url() {
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.facebook.com/");
     }
-
+//update 1
     @Test
     public void TC_02_Logo() {
         Assert.assertTrue(driver.findElement(By.cssSelector("img.fb_logo")).isDisplayed());
     }
-
+ //add commnent line
     @Test
     public void TC_03_Form() {
         Assert.assertTrue(driver.findElement(By.xpath("//form[@data-testid='royal_login_form']")).isDisplayed());
