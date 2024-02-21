@@ -7,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -44,11 +45,71 @@ public class Topic_10_Custom_Dropdown {
         selectItemInDropdown("span#salutation-button","ul#salutation-menu div","Mr.");
         sleepInSeconds(2);
 
-    }
-    @Test
-    public void TC_02_(){
+        Assert.assertEquals(driver.findElement(By.cssSelector("span#speed-button span.ui-selectmenu-text")).getText(), "Medium");
+        Assert.assertEquals(driver.findElement(By.cssSelector("span#files-button span.ui-selectmenu-text")).getText(), "ui.jQuery.js");
+        Assert.assertEquals(driver.findElement(By.cssSelector("span#number-button span.ui-selectmenu-text")).getText(), "8");
+        Assert.assertEquals(driver.findElement(By.cssSelector("span#salutation-button span.ui-selectmenu-text")).getText(), "Mr.");
+
 
     }
+    @Test
+    public void TC_02_ReactJS(){
+        driver.get("https://react.semantic-ui.com/maximize/dropdown-example-selection/");
+        selectItemInDropdown("i.dropdown","div.item>span.text", "Jenny Hess");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.divider.text")).getText(), "Jenny Hess");
+        sleepInSeconds(2);
+
+        selectItemInDropdown("i.dropdown","div.item>span.text", "Elliot Fu");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.divider.text")).getText(), "Elliot Fu");
+        sleepInSeconds(2);
+
+        selectItemInDropdown("i.dropdown","div.item>span.text", "Christian");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.divider.text")).getText(), "Christian");
+        sleepInSeconds(2);
+
+    }
+    @Test
+    public void TC_03_VueJS(){
+        driver.get("https://mikerodham.github.io/vue-dropdowns/");
+        selectItemInDropdown("li.dropdown-toggle","ul.dropdown-menu a","Second Option");
+        Assert.assertEquals(driver.findElement(By.cssSelector("li.dropdown-toggle")).getText(), "Second Option");
+        sleepInSeconds(2);
+
+
+    }
+    @Test
+    public void TC_04_Editable() {
+        driver.get("https://react.semantic-ui.com/maximize/dropdown-example-search-selection/");
+        selectItemInEditableDropdown("input.search","div.item span","Algeria");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.divider")).getText(),"Algeria");
+
+
+        selectItemInEditableDropdown("input.search","div.item span","Australia");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.divider")).getText(),"Australia");
+
+    }
+    @Test
+    public void TC_05_NopCommerce(){
+        driver.get("https://demo.nopcommerce.com/register?returnUrl=%2Fregister");
+        selectItemInDropdown("select[name='DateOfBirthDay']","select[name='DateOfBirthDay']>option","18");
+        Assert.assertTrue(driver.findElement(By.cssSelector("select[name='DateOfBirthDay']>option[value='18']")).isSelected());
+        sleepInSeconds(2);
+
+
+        selectItemInDropdown("select[name='DateOfBirthMonth']","select[name='DateOfBirthMonth']>option","September");
+        Assert.assertTrue(driver.findElement(By.cssSelector("select[name='DateOfBirthMonth']>option[value='9']")).isSelected());
+        sleepInSeconds(2);
+
+
+        selectItemInDropdown("select[name='DateOfBirthYear']","select[name='DateOfBirthYear']>option","1950");
+        Assert.assertTrue(driver.findElement(By.cssSelector("select[name='DateOfBirthYear']>option[value='1950']")).isSelected());
+        sleepInSeconds(2);
+
+
+
+    }
+
+
     @AfterClass
     public void afterClass(){
         driver.quit();
@@ -80,5 +141,24 @@ public class Topic_10_Custom_Dropdown {
         }
 
     }
+    public void selectItemInEditableDropdown(String parentCss, String childItemCss, String itemTextExpected){
+        driver.findElement(By.cssSelector(parentCss)).clear();
+        driver.findElement(By.cssSelector(parentCss)).sendKeys(itemTextExpected);
+
+        //xuat hien du trong html
+        explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(childItemCss))); //ul#number-menu div
+        List<WebElement> allItems = driver.findElements(By.cssSelector(childItemCss));
+
+        for(WebElement item:allItems){
+            String textItem = item.getText();
+            if (textItem.equals(itemTextExpected)){
+                item.click();
+                break;
+            }
+
+        }
+
+    }
+
 
 }
