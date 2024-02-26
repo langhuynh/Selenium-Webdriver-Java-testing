@@ -59,10 +59,6 @@ public class Topic_08_Textbox_TextArea {
 
         Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-validate-password-pass")).getText(),"Please enter 6 or more characters without leading or trailing spaces.");
 
-
-
-
-
     }
     @Test
     public void Login_04_Incorrect_Email_Or_Password(){
@@ -147,9 +143,7 @@ public class Topic_08_Textbox_TextArea {
 
         sleepInSeconds(3);
         Assert.assertEquals(driver.findElement(By.cssSelector("input#firstname")).getAttribute("value"), firstName);
-
         Assert.assertEquals(driver.findElement(By.cssSelector("input#lastname")).getAttribute("value"), lastNmae);
-
         Assert.assertEquals(driver.findElement(By.cssSelector("input#email")).getAttribute("value"), emailAddress);
 
     }

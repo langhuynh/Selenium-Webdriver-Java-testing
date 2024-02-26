@@ -125,6 +125,27 @@ public class Topic_12_Checkbox_Radio {
 
 
     }
+    @Test
+    public void TC_05_custom_checkbox(){
+
+        driver.get("https://docs.google.com/forms/d/e/1FAIpQLSfiypnd69zhuDkjKgqvpID9kwO29UCzeCVrGGtbNPZXQok0jA/viewform");
+        By canThoRadio = By.xpath("//div[@aria-label='Cần Thơ']");
+        By quangNameCheckbox = By.xpath("//div[@aria-label='Quảng Nam']");
+
+        Assert.assertEquals(driver.findElement(canThoRadio).getAttribute("aria-checked"),"false");
+        //Assert.assertTrue(driver.findElement(By.xpath("//div[@aria-label='Cần Thơ' and @aria-checked='false']")).isSelected());
+
+        driver.findElement(canThoRadio).click();
+        driver.findElement(quangNameCheckbox).click();
+
+        //verify radio is selected
+        Assert.assertEquals(driver.findElement(canThoRadio).getAttribute("aria-checked"),"true");
+       // Assert.assertFalse(driver.findElement(By.xpath("//div[@aria-label='Cần Thơ' and @aria-checked='false']")).isSelected());
+
+        Assert.assertEquals(driver.findElement(quangNameCheckbox).getAttribute("aria-checked"),"true");
+
+
+    }
     @AfterClass
     public void afterClass(){
         //driver.quit();
