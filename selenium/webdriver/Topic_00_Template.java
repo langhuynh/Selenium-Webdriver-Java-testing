@@ -15,6 +15,7 @@ public class Topic_00_Template {
 
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
     }
     @Test
     public void TC_01_(){
@@ -27,6 +28,14 @@ public class Topic_00_Template {
     @AfterClass
     public void afterClass(){
         driver.quit();
+    }
+    public  void sleepInSeconds(long timeSecond){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
