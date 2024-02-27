@@ -1,8 +1,10 @@
 package webdriver;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -11,16 +13,20 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.nio.file.WatchEvent;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Topic_14_Actions {
     WebDriver driver;
+    JavascriptExecutor javascriptExecutor;
     Actions actions;
     @BeforeClass
     public void beforeClass() {
 
         driver = new FirefoxDriver();
+        //driver = new ChromeDriver();
         actions = new Actions(driver);
+        javascriptExecutor = (JavascriptExecutor) driver;
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
@@ -55,6 +61,69 @@ public class Topic_14_Actions {
 
 
     }
+    @Test
+    public void TC_03_ClickAndHold() {
+        driver.get("https://automationfc.github.io/jquery-selectable/");
+        List<WebElement> allNumbers = driver.findElements(By.cssSelector("li.ui-state-default"));
+
+        Assert.assertEquals(allNumbers.size(),20);
+        actions.clickAndHold(allNumbers.get(0))
+                .moveToElement(allNumbers.get(14))
+                .release()
+                .perform();
+        sleepInSeconds(2);
+        //TONG SO DA DUOC CHON
+        List<WebElement> allNumberSelected = driver.findElements(By.cssSelector("li.ui-state-default ui-selectee ui-selected"));
+        Assert.assertEquals(allNumberSelected.size(),12);
+    }
+
+    @Test
+    public void TC_04_doubleClick() {
+        driver.get("https://automationfc.github.io/basic-form/index.html");
+        WebElement doublClick = driver.findElement(By.xpath("//button[text()='Double click me']"));
+        //Firefox can't run because element under the scroll
+        if(driver.toString().contains("firefox")){
+            javascriptExecutor.executeScript("arguments[0].scrollIntoView(true);",doublClick);
+            sleepInSeconds(2);
+        } else {
+            actions.scrollToElement(doublClick).perform();
+            sleepInSeconds(2);
+        }
+
+        actions.doubleClick(doublClick).perform();
+        sleepInSeconds(2);
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("p#demo")).getText(), "Hello Automation Guys!");
+    }
+    @Test
+    public void TC_05_rightClick() {
+        driver.get("http://swisnl.github.io/jQuery-contextMenu/demo.html");
+        Assert.assertFalse(driver.findElement(By.cssSelector("li.context-menu-icon-paste")).isDisplayed());
+        actions.contextClick(driver.findElement(By.cssSelector("span.context-menu-one"))).perform();
+        sleepInSeconds(2);
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.context-menu-icon-paste")).isDisplayed());
+
+        actions.moveToElement(driver.findElement(By.cssSelector("li.context-menu-icon-paste"))).perform();
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.context-menu-hover.context-menu-visible")).isDisplayed());
+
+        actions.click(driver.findElement(By.cssSelector("li.context-menu-icon-paste"))).perform();
+        sleepInSeconds(3);
+        driver.switchTo().alert().accept();
+
+        sleepInSeconds(3);
+
+
+        Assert.assertFalse(driver.findElement(By.cssSelector("li.context-menu-icon-paste")).isDisplayed());
+
+
+
+
+
+
+
+
+    }
+
     @AfterClass
     public void afterClass(){
 
