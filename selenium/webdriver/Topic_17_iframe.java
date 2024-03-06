@@ -93,8 +93,6 @@ public class Topic_17_iframe {
         driver.findElement(By.cssSelector("input#keyboard")).sendKeys("123456789");
         sleepInSeconds(3);
 
-
-
     }
     public void afterClass(){
         driver.quit();
