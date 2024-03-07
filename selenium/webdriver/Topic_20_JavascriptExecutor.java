@@ -100,20 +100,43 @@ public class Topic_20_JavascriptExecutor {
 
         Assert.assertEquals(getElementValidationMessage("//input[@id='email']"),"Please enter an email address.");
 
+    }
+    @Test
+    public void TC_05_CreateAnAccount() {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.cssSelector("a.skip-account span.label")).click();
+        sleepInSecond(3);
+        driver.findElement(By.cssSelector("div#header-account a[title='My Account']")).click();
+        sleepInSecond(3);
+        driver.findElement(By.cssSelector("a[title='Create an Account']")).click();
+        sleepInSecond(3);
+
+        driver.findElement(By.cssSelector("input#firstname")).sendKeys("huynh");
+        driver.findElement(By.cssSelector("input#lastname")).sendKeys("abc");
+
+        driver.findElement(By.cssSelector("input#email_address")).sendKeys(getEmailAddress());
+        driver.findElement(By.cssSelector("input#password")).sendKeys("123456");
+        driver.findElement(By.cssSelector("input#confirmation")).sendKeys("123456");
+        sleepInSecond(3);
+
+        driver.findElement(By.cssSelector("button[title='Register']")).click();
+        Assert.assertEquals(driver.findElement(By.cssSelector("li.success-msg span")).getText(),"Thank you for registering with Main Website Store.");
 
 
+        driver.findElement(By.cssSelector("a.skip-account span.label")).click();
+        sleepInSecond(3);
+        driver.findElement(By.cssSelector("div#header-account a[title='Log Out']")).click();
 
+        navigateToUrlByJS("http://live.techpanda.org/");
 
-
-
-
-
+        //Assert.assertEquals(driver.findElement(By.cssSelector("div.main-container h2")).getText(), "THIS IS DEMO SITE FOR   ");
+        Assert.assertTrue(driver.findElement(By.xpath("//div[@class='col-main']//h2[text()='This is demo site for   ']")).isDisplayed());
+        
 
 
 
 
     }
-    @AfterClass
     public void afterClass(){
         driver.quit();
     }
