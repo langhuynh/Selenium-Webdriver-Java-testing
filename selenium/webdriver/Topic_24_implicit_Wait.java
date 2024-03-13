@@ -32,7 +32,7 @@ public class Topic_24_implicit_Wait {
     }
     @Test
     public void TC_01_less_than_5seconds(){
-        //false
+        //fail
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
         driver.get("https://automationfc.github.io/dynamic-loading/");
