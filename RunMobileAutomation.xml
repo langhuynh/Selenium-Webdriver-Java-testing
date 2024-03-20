@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!--<suite name="All Test Suite">
+   &lt;!&ndash; <groups>
+        <run>
+            <include name="category"/>
+        </run>
+    </groups>&ndash;&gt;
+    <test verbose="2" preserve-order="true" name="Run on firefox Driver">
+        <packages>
+            <package name="category"></package>
+            <package name="order"></package>
+            <package name="payment"></package>
+        </packages>
+        &lt;!&ndash;<classes>
+            <class name="javaTester.Topic_05_Assert"> </class>
+            <class name="webdriver.Topic_04_XPath_CSS"> </class>
+        </classes>&ndash;&gt;
+
+    </test>
+</suite>-->
+<suite name="All Test Suite">
+    <!--<parameter name="environment" value="dev"></parameter>
+    <parameter name="environment" value="staging"></parameter>
+    <parameter name="environment" value="live"></parameter>-->
+
+    <test name="Run on chrome browser">
+        <parameter name="browser" value="chrome"></parameter>
+        <parameter name="version" value="latest"></parameter>
+        <classes>
+            <class name="testNG.Parameter"/>
+        </classes>
+    </test>
+
+</suite>
